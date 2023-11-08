@@ -1,5 +1,7 @@
 import type { GatsbyConfig } from "gatsby";
 
+const adapter = require("gatsby-adapter-netlify");
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `QR Code Generator`,
@@ -11,6 +13,9 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: ["gatsby-plugin-emotion"],
   pathPrefix: "/qr-code",
+  adapter: adapter({
+    excludeDatastoreFromEngineFunction: false,
+  }),
 };
 
 export default config;
