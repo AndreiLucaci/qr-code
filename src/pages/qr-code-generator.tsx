@@ -11,19 +11,23 @@ export default function QrCodeGenerator() {
     const svg = document.getElementById("qr-code") as HTMLElement;
     const svgData = new XMLSerializer().serializeToString(svg);
     const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
+    canvas.width = 512;
+    canvas.height = 512;
     const ctx = canvas.getContext("2d");
     const img = new Image();
     img.onload = () => {
-      ctx?.drawImage(img, 0, 0);
-      const pngFile = canvas.toDataURL("image/png");
-      const downloadLink = document.createElement("a");
-      downloadLink.href = pngFile;
-      downloadLink.download = "qr-code.png";
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      if (ctx) {
+        ctx.fillStyle = "white";
+        ctx.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
+        ctx.drawImage(img, 20, 20, canvas.width - 40, canvas.height - 40);
+        const pngFile = canvas.toDataURL("image/png");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pngFile;
+        downloadLink.download = "qr-code.png";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }
     };
     img.src = "data:image/svg+xml;base64," + btoa(svgData);
   };
